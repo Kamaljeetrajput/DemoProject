@@ -1,97 +1,113 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Demo React Native App
 
-# Getting Started
+## Setup Instructions
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+1. **Clone the repository:**
+   ```sh
+   git clone <your-repo-url>
+   cd Demo
+   ```
 
-## Step 1: Start Metro
+2. **Install dependencies:**
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+3. **Install iOS/Android dependencies:**
+   - For iOS:
+     ```sh
+     cd ios && pod install && cd ..
+     ```
+   - For Android: No extra steps required (dependencies are auto-linked).
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+4. **Run the app:**
+   - For iOS:
+     ```sh
+     npx react-native run-ios
+     ```
+   - For Android:
+     ```sh
+     npx react-native run-android
+     ```
 
-```sh
-# Using npm
-npm start
+## Libraries Used
 
-# OR using Yarn
-yarn start
-```
+- [`react-native-vision-camera`](https://github.com/mrousavy/react-native-vision-camera): Camera access and photo capture
+- [`@react-native-async-storage/async-storage`](https://github.com/react-native-async-storage/async-storage): Persistent storage
+- [`@react-navigation/native`](https://reactnavigation.org/): Navigation
+- [`react-native-haptic-feedback`](https://github.com/mkuczera/react-native-haptic-feedback): Haptic feedback for user interactions
+- [`@react-native-community/geolocation`](https://github.com/react-native-geolocation/react-native-geolocation): Geolocation services
+- [`react-native-permissions`](https://github.com/zoontek/react-native-permissions): Permission handling
 
-## Step 2: Build and run your app
+## Known Issues
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+- **Camera/Location Permissions:**
+  - The app requires camera and location permissions. If denied, some features will not work.
+- **Haptic Feedback:**
+  - Haptic feedback strength and support may vary by device and OS version.
+- **Animations:**
+  - Entry and transition animations use the built-in Animated API. Performance may vary on low-end devices.
+- **Android/iOS Differences:**
+  - Some UI or permission behaviors may differ slightly between platforms.
 
-### Android
+## Notes
+- Make sure to test on a real device for camera, haptics, and geolocation features.
+- If you encounter issues with native modules, try cleaning the build and reinstalling pods (for iOS).
 
-```sh
-# Using npm
-npm run android
+---
 
-# OR using Yarn
-yarn android
-```
+### Why does `pod install` take long?
 
-### iOS
+1. **First-time setup:** The initial run downloads all dependencies and their sources, which can be several hundred MB.
+2. **Network speed:** Slow or unstable internet will make downloads much slower.
+3. **CocoaPods CDN:** Sometimes the CocoaPods trunk or CDN is slow or under heavy load.
+4. **Large/Many dependencies:** More native modules = more pods to fetch and build.
+5. **Outdated CocoaPods:** Older versions can be slower or less efficient.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+---
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+### Tips to Speed Up or Troubleshoot
 
-```sh
-bundle install
-```
+1. **Update CocoaPods:**
+   ```sh
+   sudo gem install cocoapods
+   pod repo update
+   ```
 
-Then, and every time you update your native dependencies, run:
+2. **Use CDN for Specs (default in recent CocoaPods):**
+   - If your `Podfile` uses `source 'https://cdn.cocoapods.org/'`, you’re already using the CDN, which is faster than the old trunk.
 
-```sh
-bundle exec pod install
-```
+3. **Clean and Retry:**
+   ```sh
+   rm -rf Pods Podfile.lock
+   pod cache clean --all
+   pod install
+   ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+4. **Check Your Internet Connection:**  
+   Make sure your connection is stable and fast.
 
-```sh
-# Using npm
-npm run ios
+5. **Run with Verbose Output:**  
+   This can help you see where it’s slow:
+   ```sh
+   pod install --verbose
+   ```
 
-# OR using Yarn
-yarn ios
-```
+6. **Use a Ruby Version Manager:**  
+   Sometimes system Ruby causes issues. Use [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/).
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+7. **Try a Mirror (Advanced):**  
+   If CDN is slow in your region, you can try a mirror (not officially supported, but sometimes helps in China/India).
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+### Good News
 
-Now that you have successfully run the app, let's make changes!
+- **Subsequent runs are much faster** because dependencies are cached locally.
+- You only need to run `pod install` again if you add/remove native dependencies or after a `git clean`.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+---
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+If you’re stuck for more than 10-15 minutes, try the above steps or check your network. If you see specific errors, let me know and I can help debug!
