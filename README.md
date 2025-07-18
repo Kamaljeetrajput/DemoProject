@@ -1,28 +1,40 @@
-# Demo React Native App
+# CryptoLiveScreen (React Native)
+
+A simple React Native screen that connects to the Binance WebSocket API to display live BTC/USDT price updates, with a real-time chart and color-coded price changes.
+
+---
+
+## Features
+- **Live price updates** from Binance WebSocket API (`wss://stream.binance.com:9443/ws/btcusdt@trade`)
+- **FlatList** of recent trades with timestamps
+- **Color coding**: green for price increases, red for decreases
+- **Live line chart** of recent price changes (using `react-native-chart-kit`)
+
+---
 
 ## Setup Instructions
 
-1. **Clone the repository:**
+1. **Clone the repository**
    ```sh
    git clone <your-repo-url>
-   cd Demo
+   cd <your-project-folder>
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies**
    ```sh
    npm install
    # or
    yarn install
    ```
 
-3. **Install iOS/Android dependencies:**
-   - For iOS:
-     ```sh
-     cd ios && pod install && cd ..
-     ```
-   - For Android: No extra steps required (dependencies are auto-linked).
+3. **Install chart dependencies**
+   ```sh
+   npm install react-native-chart-kit react-native-svg
+   # or
+   yarn add react-native-chart-kit react-native-svg
+   ```
 
-4. **Run the app:**
+4. **Run the app**
    - For iOS:
      ```sh
      npx react-native run-ios
@@ -32,82 +44,37 @@
      npx react-native run-android
      ```
 
-## Libraries Used
-
-- [`react-native-vision-camera`](https://github.com/mrousavy/react-native-vision-camera): Camera access and photo capture
-- [`@react-native-async-storage/async-storage`](https://github.com/react-native-async-storage/async-storage): Persistent storage
-- [`@react-navigation/native`](https://reactnavigation.org/): Navigation
-- [`react-native-haptic-feedback`](https://github.com/mkuczera/react-native-haptic-feedback): Haptic feedback for user interactions
-- [`@react-native-community/geolocation`](https://github.com/react-native-geolocation/react-native-geolocation): Geolocation services
-- [`react-native-permissions`](https://github.com/zoontek/react-native-permissions): Permission handling
-
-## Known Issues
-
-- **Camera/Location Permissions:**
-  - The app requires camera and location permissions. If denied, some features will not work.
-- **Haptic Feedback:**
-  - Haptic feedback strength and support may vary by device and OS version.
-- **Animations:**
-  - Entry and transition animations use the built-in Animated API. Performance may vary on low-end devices.
-- **Android/iOS Differences:**
-  - Some UI or permission behaviors may differ slightly between platforms.
-
-## Notes
-- Make sure to test on a real device for camera, haptics, and geolocation features.
-- If you encounter issues with native modules, try cleaning the build and reinstalling pods (for iOS).
-
 ---
 
-### Why does `pod install` take long?
+## Usage
 
-1. **First-time setup:** The initial run downloads all dependencies and their sources, which can be several hundred MB.
-2. **Network speed:** Slow or unstable internet will make downloads much slower.
-3. **CocoaPods CDN:** Sometimes the CocoaPods trunk or CDN is slow or under heavy load.
-4. **Large/Many dependencies:** More native modules = more pods to fetch and build.
-5. **Outdated CocoaPods:** Older versions can be slower or less efficient.
+- The `CryptoLiveScreen` component connects to Binance and displays live BTC/USDT trades.
+- The top shows the latest price, followed by a live-updating line chart and a list of recent trades.
+- Price increases are shown in green, decreases in red.
 
----
-
-### Tips to Speed Up or Troubleshoot
-
-1. **Update CocoaPods:**
-   ```sh
-   sudo gem install cocoapods
-   pod repo update
+**To use in your app:**
+1. Copy `CryptoLiveScreen.tsx` and its `styles.ts` to your project (e.g., `src/Screens/CryptoLiveScreen/`).
+2. Add it to your navigation (if using React Navigation):
+   ```js
+   import CryptoLiveScreen from './Screens/CryptoLiveScreen/CryptoLiveScreen';
+   // ...
+   <Stack.Screen name="CryptoLive" component={CryptoLiveScreen} />
    ```
 
-2. **Use CDN for Specs (default in recent CocoaPods):**
-   - If your `Podfile` uses `source 'https://cdn.cocoapods.org/'`, you’re already using the CDN, which is faster than the old trunk.
+---
 
-3. **Clean and Retry:**
-   ```sh
-   rm -rf Pods Podfile.lock
-   pod cache clean --all
-   pod install
-   ```
+## Troubleshooting & Known Issues
 
-4. **Check Your Internet Connection:**  
-   Make sure your connection is stable and fast.
-
-5. **Run with Verbose Output:**  
-   This can help you see where it’s slow:
-   ```sh
-   pod install --verbose
-   ```
-
-6. **Use a Ruby Version Manager:**  
-   Sometimes system Ruby causes issues. Use [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/).
-
-7. **Try a Mirror (Advanced):**  
-   If CDN is slow in your region, you can try a mirror (not officially supported, but sometimes helps in China/India).
+- **Chart error: invalid number formatting character**
+  - This happens if the chart receives `NaN`, `Infinity`, or empty data. The code now filters out invalid values and only renders the chart if there are enough valid points.
+- **WebSocket not connecting**
+  - Make sure your device/emulator has internet access.
+- **react-native-svg not linked**
+  - If you see errors about `react-native-svg`, try running `npx pod-install` (iOS) or rebuilding the app.
+- **App not updating in real time**
+  - Ensure you are on a real device or a properly configured emulator with network access.
 
 ---
 
-### Good News
-
-- **Subsequent runs are much faster** because dependencies are cached locally.
-- You only need to run `pod install` again if you add/remove native dependencies or after a `git clean`.
-
----
-
-If you’re stuck for more than 10-15 minutes, try the above steps or check your network. If you see specific errors, let me know and I can help debug!
+## License
+MIT

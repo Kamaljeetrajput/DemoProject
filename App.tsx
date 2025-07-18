@@ -6,7 +6,6 @@
  */
 
 import { NewAppScreen } from '@react-native/new-app-screen';
-import ProfileScreen from './src/Screens/ProfileScreen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import Routes from './src/navigation/Routes';
 

@@ -1,4 +1,4 @@
 
 export default{
-    PROFILE_SCREEN:'Profile'
+    CRYPTO_SCREEN:'CryptoScreen'
 }
